@@ -3,9 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Edit, Trash2, Plus, Loader2, FileText } from 'lucide-react';
-import { layananService } from '@/lib/api';
+import { layananService, mediaService, STORAGE_URL } from '@/lib/api';
+import RichTextEditor from '@/components/RichTextEditor';
+import '../styles/tiptap-custom.css';
 import { toast } from 'sonner';
 
 export default function Layanan() {
@@ -144,18 +145,29 @@ export default function Layanan() {
 
                             <div className="space-y-2">
                                 <Label htmlFor="deskripsi">Deskripsi Singkat</Label>
-                                <Textarea id="deskripsi" value={formData.deskripsi} onChange={handleInputChange} placeholder="Service description..." />
+                                <RichTextEditor
+                                    value={formData.deskripsi}
+                                    onChange={(value) => setFormData(prev => ({ ...prev, deskripsi: value }))}
+                                    placeholder="Deskripsi layanan..."
+                                />
                             </div>
 
                             <div className="space-y-2">
                                 <Label htmlFor="persyaratan">Persyaratan</Label>
-                                <Textarea id="persyaratan" value={formData.persyaratan} onChange={handleInputChange} placeholder="- KTP\n- KK..." className="h-32 font-mono text-sm" />
-                                <p className="text-xs text-muted-foreground">Pisahkan dengan baris baru.</p>
+                                <RichTextEditor
+                                    value={formData.persyaratan}
+                                    onChange={(value) => setFormData(prev => ({ ...prev, persyaratan: value }))}
+                                    placeholder="Daftar persyaratan yang diperlukan..."
+                                />
                             </div>
 
                             <div className="space-y-2">
                                 <Label htmlFor="prosedur">Prosedur / Langkah-langkah</Label>
-                                <Textarea id="prosedur" value={formData.prosedur} onChange={handleInputChange} placeholder="Urutan prosedur..." className="h-32" />
+                                <RichTextEditor
+                                    value={formData.prosedur}
+                                    onChange={(value) => setFormData(prev => ({ ...prev, prosedur: value }))}
+                                    placeholder="Langkah-langkah pengajuan layanan..."
+                                />
                             </div>
 
                             <div className="space-y-2">

@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Edit, Trash2, Plus, Loader2 } from 'lucide-react';
-import { dpoService, STORAGE_URL } from '@/lib/api';
-
+import { dpoService, mediaService, STORAGE_URL } from '@/lib/api';
+import RichTextEditor from '@/components/RichTextEditor';
+import '../styles/tiptap-custom.css';
 import { toast } from 'sonner';
 
 export default function DataDPO() {
@@ -193,7 +193,11 @@ export default function DataDPO() {
 
                             <div className="space-y-2">
                                 <Label htmlFor="ciri_fisik">Ciri-ciri Fisik Khusus</Label>
-                                <Textarea id="ciri_fisik" value={formData.ciri_fisik} onChange={handleInputChange} placeholder="Tinggi badan, warna kulit, tato, dll." />
+                                <RichTextEditor
+                                    value={formData.ciri_fisik}
+                                    onChange={(value) => setFormData(prev => ({ ...prev, ciri_fisik: value }))}
+                                    placeholder="Tinggi badan, warna kulit, tato, dll."
+                                />
                             </div>
 
                             <div className="space-y-2">

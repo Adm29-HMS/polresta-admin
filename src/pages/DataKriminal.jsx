@@ -3,12 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Edit, Trash2, Plus, Loader2 } from 'lucide-react';
-import { kriminalService } from '@/lib/api';
-
+import { kriminalService, mediaService, STORAGE_URL } from '@/lib/api';
+import RichTextEditor from '@/components/RichTextEditor';
+import '../styles/tiptap-custom.css';
 import { toast } from 'sonner';
 
 export default function DataKriminal() {
@@ -181,7 +181,11 @@ export default function DataKriminal() {
 
                             <div className="space-y-2">
                                 <Label htmlFor="kronologi">Kronologi Singkat</Label>
-                                <Textarea id="kronologi" value={formData.kronologi} onChange={handleInputChange} placeholder="Details..." className="h-24" />
+                                <RichTextEditor
+                                    value={formData.kronologi}
+                                    onChange={(value) => setFormData(prev => ({ ...prev, kronologi: value }))}
+                                    placeholder="Tuliskan kronologi kejadian..."
+                                />
                             </div>
 
                             <div className="flex justify-end pt-4 gap-2">

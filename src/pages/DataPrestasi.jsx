@@ -3,10 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Edit, Trash2, Plus, Loader2, Award } from 'lucide-react';
-import { prestasiService, STORAGE_URL } from '@/lib/api';
+import { prestasiService, mediaService, STORAGE_URL } from '@/lib/api';
+import RichTextEditor from '@/components/RichTextEditor';
+import '../styles/tiptap-custom.css';
 import { toast } from 'sonner';
 
 export default function DataPrestasi() {
@@ -156,7 +157,11 @@ export default function DataPrestasi() {
 
                             <div className="space-y-2">
                                 <Label htmlFor="deskripsi">Deskripsi</Label>
-                                <Textarea id="deskripsi" value={formData.deskripsi} onChange={handleInputChange} required rows={4} placeholder="Jelaskan detail prestasi..." />
+                                <RichTextEditor
+                                    value={formData.deskripsi}
+                                    onChange={(value) => setFormData(prev => ({ ...prev, deskripsi: value }))}
+                                    placeholder="Jelaskan detail prestasi..."
+                                />
                             </div>
 
                             <div className="space-y-2">

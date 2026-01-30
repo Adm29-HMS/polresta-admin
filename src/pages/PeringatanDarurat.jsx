@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Edit, Trash2, Plus, Loader2 } from 'lucide-react';
-import { peringatanDaruratService } from '@/lib/api';
-
+import { peringatanDaruratService, mediaService, STORAGE_URL } from '@/lib/api';
+import RichTextEditor from '@/components/RichTextEditor';
+import '../styles/tiptap-custom.css';
 import { toast } from 'sonner';
 
 export default function PeringatanDarurat() {
@@ -154,7 +154,11 @@ export default function PeringatanDarurat() {
 
                             <div className="space-y-2">
                                 <Label htmlFor="deskripsi">Deskripsi & Instruksi</Label>
-                                <Textarea id="deskripsi" value={formData.deskripsi} onChange={handleInputChange} placeholder="Describe the situation and what citizens should do..." className="h-32" required />
+                                <RichTextEditor
+                                    value={formData.deskripsi}
+                                    onChange={(value) => setFormData(prev => ({ ...prev, deskripsi: value }))}
+                                    placeholder="Jelaskan situasi dan hal yang harus dilakukan warga..."
+                                />
                             </div>
 
                             <div className="flex justify-end pt-4 gap-2">

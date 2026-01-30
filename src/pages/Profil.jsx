@@ -3,9 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Edit, Trash2, Plus, Loader2 } from 'lucide-react';
-import { profilService } from '@/lib/api';
+import { profilService, mediaService, STORAGE_URL } from '@/lib/api';
+import RichTextEditor from '@/components/RichTextEditor';
+import '../styles/tiptap-custom.css';
 import { toast } from 'sonner';
 
 export default function Profil() {
@@ -104,6 +105,29 @@ export default function Profil() {
         }
     };
 
+    const handleEditorImageUpload = async (file) => {
+        try {
+            const formData = new FormData();
+            formData.append('title', `Profil Image - ${new Date().getTime()}`);
+            formData.append('type', 'photo');
+            formData.append('file_path', file);
+
+            const response = await mediaService.create(formData);
+            const path = response.file_path || response.url || response.data?.file_path;
+
+            if (path) {
+                return `${STORAGE_URL}/${path}`;
+            } else {
+                toast.error('Gagal mendapatkan URL gambar.');
+                return null;
+            }
+        } catch (error) {
+            console.error('Editor upload failed:', error);
+            toast.error('Gagal mengupload gambar.');
+            return null;
+        }
+    };
+
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -133,7 +157,12 @@ export default function Profil() {
 
                             <div className="space-y-2">
                                 <Label htmlFor="value">Konten Profil</Label>
-                                <Textarea id="value" value={formData.value} onChange={handleInputChange} placeholder="Write content here..." className="h-64" required />
+                                <RichTextEditor
+                                    value={formData.value}
+                                    onChange={(value) => setFormData(prev => ({ ...prev, value: value }))}
+                                    placeholder="Tulis konten profil di sini..."
+                                    onImageUpload={handleEditorImageUpload}
+                                />
                             </div>
 
                             <div className="flex justify-end pt-4 gap-2">
@@ -177,9 +206,10 @@ export default function Profil() {
                                     </div>
 
                                     <h2 className="text-2xl font-bold font-heading text-gray-900 mb-4 border-b pb-4">{item.key}</h2>
-                                    <div className="prose max-w-none text-gray-700 whitespace-pre-wrap">
-                                        {item.value}
-                                    </div>
+                                    <div 
+                                        className="prose prose-lg max-w-none text-gray-700"
+                                        dangerouslySetInnerHTML={{ __html: item.value }}
+                                    />
                                 </div>
                             </div>
                         ))

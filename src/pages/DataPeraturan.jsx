@@ -3,10 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Edit, Trash2, Plus, Loader2, FileText, Download } from 'lucide-react';
 import { toast } from 'sonner';
-import { peraturanService } from '@/lib/api';
+import { peraturanService, mediaService, STORAGE_URL } from '@/lib/api';
+import RichTextEditor from '@/components/RichTextEditor';
+import '../styles/tiptap-custom.css';
 
 export default function Peraturan() {
     const [data, setData] = useState([]);
@@ -150,7 +151,11 @@ export default function Peraturan() {
 
                             <div className="space-y-2">
                                 <Label htmlFor="tentang">Tentang</Label>
-                                <Textarea id="tentang" value={formData.tentang} onChange={handleInputChange} placeholder="Peraturan ini mengatur tentang..." required />
+                                <RichTextEditor
+                                    value={formData.tentang}
+                                    onChange={(value) => setFormData(prev => ({ ...prev, tentang: value }))}
+                                    placeholder="Peraturan ini mengatur tentang..."
+                                />
                             </div>
 
                             <div className="space-y-2">

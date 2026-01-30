@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Edit, Trash2, Plus, Loader2 } from 'lucide-react';
-import { orangHilangService, STORAGE_URL } from '@/lib/api';
-
+import { orangHilangService, mediaService, STORAGE_URL } from '@/lib/api';
+import RichTextEditor from '@/components/RichTextEditor';
+import '../styles/tiptap-custom.css';
 import { toast } from 'sonner';
 
 export default function OrangHilang() {
@@ -209,7 +209,11 @@ export default function OrangHilang() {
 
                             <div className="space-y-2">
                                 <Label htmlFor="ciri">Ciri-ciri Fisik / Pakaian Terakhir</Label>
-                                <Textarea id="ciri" value={formData.ciri} onChange={handleInputChange} placeholder="Describe clothing, physical features, etc." />
+                                <RichTextEditor
+                                    value={formData.ciri}
+                                    onChange={(value) => setFormData(prev => ({ ...prev, ciri: value }))}
+                                    placeholder="Describe clothing, physical features, etc."
+                                />
                             </div>
 
                             <div className="space-y-2">
