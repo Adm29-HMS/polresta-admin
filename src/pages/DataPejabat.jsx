@@ -109,25 +109,8 @@ export default function DataPejabat() {
 
             if (formData.id) {
                 // Update mode
-                // Note: For PUT with FormData in Laravel, sometimes needed _method: PUT or use POST with _method
+                // Laravel requires POST method with _method="PUT" for FormData updates containing files
                 data.append('_method', 'PUT');
-                await pejabatService.create(data); // Actually calling POST endpoint but with _method might be safer or check api.js
-                // WAIT, api.js uses put for update: apiClient.put(`/api/pejabat/${id}`, data)
-                // Axios PUT with FormData is tricky. Better use POST with _method='PUT' if using standard Laravel Resource
-                // Or just use the update method but we need to verify if backend handles PUT form-data correctly.
-                // Usually POST with _method='PUT' is the way for file uploads in updates.
-
-                // Let's modify api.js update method later? Or just use POST with _method here
-                // But pejabatService.update calls PUT. 
-                // Let's try matching the service. 
-                // If service uses PUT, axios sends PUT. Laravel might not read file in PUT. 
-                // SAFE WAY: Use POST for update as well with _method field if containing files.
-
-                // For now let's try to use a specific manual call or just creating a new 'updateWithFile' in service?
-                // Or just standard update if no file is changed. 
-
-                // Temporary fix: Use create for now with _method PUT appended if ID exists.
-                // But let's stick to service.update for now and if it fails, I will fix api.js.
                 await pejabatService.update(formData.id, data);
             } else {
                 // Create mode

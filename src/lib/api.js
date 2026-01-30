@@ -16,6 +16,11 @@ export const dashboardService = {
 /**
  * API Service untuk Kategori Berita
  */
+// ... (kode sebelumnya)
+
+/**
+ * API Service untuk Kategori Berita
+ */
 export const kategoriBeritaService = {
   getAll: async () => {
     const response = await apiClient.get("/api/kategori-berita");
@@ -26,7 +31,8 @@ export const kategoriBeritaService = {
     return response.data;
   },
   update: async (id, data) => {
-    const response = await apiClient.put(`/api/kategori-berita/${id}`, data);
+    // update kategori berita biasanya tidak ada file, tapi untuk keamanan pakai post jika FormData
+    const response = await apiClient.post(`/api/kategori-berita/${id}`, data);
     return response.data;
   },
   delete: async (id) => {
@@ -48,11 +54,16 @@ export const pejabatService = {
     return response.data;
   },
   create: async (data) => {
-    const response = await apiClient.post("/api/pejabat", data);
+    const response = await apiClient.post("/api/pejabat", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   update: async (id, data) => {
-    const response = await apiClient.put(`/api/pejabat/${id}`, data);
+    // Gunakan POST untuk update dengan FormData (file upload)
+    const response = await apiClient.post(`/api/pejabat/${id}`, data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   delete: async (id) => {
@@ -74,11 +85,16 @@ export const beritaService = {
     return response.data;
   },
   create: async (data) => {
-    const response = await apiClient.post("/api/berita", data);
+    const response = await apiClient.post("/api/berita", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   update: async (id, data) => {
-    const response = await apiClient.put(`/api/berita/${id}`, data);
+      // Gunakan POST untuk update berita (ada cover)
+    const response = await apiClient.post(`/api/berita/${id}`, data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   delete: async (id) => {
@@ -118,11 +134,15 @@ export const dpoService = {
     return response.data;
   },
   create: async (data) => {
-    const response = await apiClient.post("/api/dpo", data);
+    const response = await apiClient.post("/api/dpo", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   update: async (id, data) => {
-    const response = await apiClient.put(`/api/dpo/${id}`, data);
+    const response = await apiClient.post(`/api/dpo/${id}`, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   delete: async (id) => {
@@ -140,11 +160,15 @@ export const orangHilangService = {
     return response.data;
   },
   create: async (data) => {
-    const response = await apiClient.post("/api/orang-hilang", data);
+    const response = await apiClient.post("/api/orang-hilang", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   update: async (id, data) => {
-    const response = await apiClient.put(`/api/orang-hilang/${id}`, data);
+    const response = await apiClient.post(`/api/orang-hilang/${id}`, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   delete: async (id) => {
@@ -162,11 +186,15 @@ export const peringatanDaruratService = {
     return response.data;
   },
   create: async (data) => {
-    const response = await apiClient.post("/api/peringatan-darurat", data);
+    const response = await apiClient.post("/api/peringatan-darurat", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   update: async (id, data) => {
-    const response = await apiClient.put(`/api/peringatan-darurat/${id}`, data);
+    const response = await apiClient.post(`/api/peringatan-darurat/${id}`, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   delete: async (id) => {
@@ -184,11 +212,16 @@ export const peraturanService = {
     return response.data;
   },
   create: async (data) => {
-    const response = await apiClient.post("/api/peraturan", data);
+     // Peraturan mungkin ada file PDF upload
+    const response = await apiClient.post("/api/peraturan", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   update: async (id, data) => {
-    const response = await apiClient.put(`/api/peraturan/${id}`, data);
+    const response = await apiClient.post(`/api/peraturan/${id}`, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   delete: async (id) => {
@@ -206,11 +239,15 @@ export const mediaService = {
     return response.data;
   },
   create: async (data) => {
-    const response = await apiClient.post("/api/media", data);
+    const response = await apiClient.post("/api/media", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   update: async (id, data) => {
-    const response = await apiClient.put(`/api/media/${id}`, data);
+    const response = await apiClient.post(`/api/media/${id}`, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   delete: async (id) => {
@@ -228,11 +265,15 @@ export const kantorPolisiService = {
     return response.data;
   },
   create: async (data) => {
-    const response = await apiClient.post("/api/kantor-polisi", data);
+    const response = await apiClient.post("/api/kantor-polisi", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   update: async (id, data) => {
-    const response = await apiClient.put(`/api/kantor-polisi/${id}`, data);
+    const response = await apiClient.post(`/api/kantor-polisi/${id}`, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   delete: async (id) => {
@@ -250,11 +291,15 @@ export const layananService = {
     return response.data;
   },
   create: async (data) => {
-    const response = await apiClient.post("/api/layanan", data);
+    const response = await apiClient.post("/api/layanan", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   update: async (id, data) => {
-    const response = await apiClient.put(`/api/layanan/${id}`, data);
+    const response = await apiClient.post(`/api/layanan/${id}`, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   },
   delete: async (id) => {
